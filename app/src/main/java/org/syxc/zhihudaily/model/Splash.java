@@ -1,26 +1,28 @@
 package org.syxc.zhihudaily.model;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * 启动界面图像
  * Created by syxc on 16/1/7.
  */
 public final class Splash {
 
-  public Splash() {
-  }
-
   // 供显示的图片版权信息
   public String text;
 
   // 图像的 URL
-  public String img;
+  @JSONField(name = "img") public String image;
 
-  public Splash(String text, String img) {
+  public Splash() {
+  }
+
+  public Splash(String text, String image) {
     this.text = text;
-    this.img = img;
+    this.image = image;
   }
 
   @Override public String toString() {
-    return String.format("text=%s,img=%s", text, img);
+    return String.format("text=%s,image=%s", text, image);
   }
 }
