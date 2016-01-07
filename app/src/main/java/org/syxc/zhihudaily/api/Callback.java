@@ -7,14 +7,13 @@ public interface Callback<T> {
 
   /**
    * Success http response
-   * @param t
    */
-  void success(T t);
+  void onSuccess(T t);
+
+  void onCompleted();
 
   /**
    * Fail http response
-   * @param error
    */
-  void failure(String error);
-
+  void onError(String error);
 }

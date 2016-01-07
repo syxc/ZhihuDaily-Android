@@ -6,18 +6,21 @@ package org.syxc.zhihudaily.model;
  */
 public final class Splash {
 
+  public Splash() {
+  }
+
   // 供显示的图片版权信息
-  public final String text;
+  public String text;
 
   // 图像的 URL
-  public final String image;
+  public String img;
 
-  public Splash(String text, String image) {
+  public Splash(String text, String img) {
     this.text = text;
-    this.image = image;
+    this.img = img;
   }
 
   @Override public String toString() {
-    return String.format("text=%s,image=%s", text, image);
+    return String.format("text=%s,img=%s", text, img);
   }
 }

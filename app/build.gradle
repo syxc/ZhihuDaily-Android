@@ -37,6 +37,7 @@ android {
     exclude 'META-INF/LGPL2.1'
     exclude 'LICENSE.txt'
     exclude 'LICENSE'
+    exclude 'META-INF/services/javax.annotation.processing.Processor'
   }
 
   lintOptions {
@@ -68,8 +69,10 @@ dependencies {
   compile deps.okhttp
   compile deps.okio
   compile deps.okinterceptor
+  compile deps.dagger
+  compile deps.dagger_compiler
   compile deps.glide
-  compile deps.moshi
   compile deps.rxjava
   compile deps.rxandroid
+  compile deps.fastjson
 }

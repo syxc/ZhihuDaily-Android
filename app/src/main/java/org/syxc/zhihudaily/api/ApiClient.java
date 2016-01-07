@@ -1,7 +1,6 @@
 package org.syxc.zhihudaily.api;
 
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
+import com.alibaba.fastjson.JSON;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -20,13 +19,6 @@ import timber.log.Timber;
 public final class ApiClient implements DailyApi {
 
   private static ApiClient instance = null;
-
-  // Moshi
-  private static final Moshi moshi;
-
-  static {
-    moshi = new Moshi.Builder().build();
-  }
 
   public static ApiClient instance() {
     if (instance == null) {
@@ -84,20 +76,20 @@ public final class ApiClient implements DailyApi {
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Subscriber<Response>() {
           @Override public void onCompleted() {
-            // do nothing
+            callback.onCompleted();
           }
 
           @Override public void onError(Throwable e) {
             Timber.e(e.getMessage());
-            callback.failure(e.getLocalizedMessage());
+            callback.onError(e.getLocalizedMessage());
           }
 
           @Override public void onNext(Response response) {
             try {
               String data = response.body().string();
               Timber.i(data);
-              JsonAdapter<Splash> jsonAdapter = moshi.adapter(Splash.class);
-              callback.success(jsonAdapter.fromJson(data));
+              Splash splash = JSON.parseObject(data, Splash.class);
+              callback.onSuccess(splash);
             } catch (IOException e) {
               e.printStackTrace();
             } finally {

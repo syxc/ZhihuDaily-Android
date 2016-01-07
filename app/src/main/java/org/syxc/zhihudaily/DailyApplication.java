@@ -2,16 +2,25 @@ package org.syxc.zhihudaily;
 
 import android.app.Application;
 import android.util.Log;
+import dagger.ObjectGraph;
+import java.util.Arrays;
+import java.util.List;
 import org.syxc.zhihudaily.api.ApiClient;
 import timber.log.Timber;
 
 /**
  * Created by syxc on 1/6/16.
  */
-public class DailyApp extends Application {
+public final class DailyApplication extends Application {
+
+  private ObjectGraph graph;
+
+  public final String injectText = "xixi";
 
   @Override public void onCreate() {
     super.onCreate();
+
+    graph = ObjectGraph.create(getModules().toArray());
 
     if (DailyConfig.DEBUG) {
       Timber.plant(new Timber.DebugTree());
@@ -23,6 +32,14 @@ public class DailyApp extends Application {
   @Override public void onTerminate() {
     super.onTerminate();
     ApiClient.instance().destroy();
+  }
+
+  protected List<Object> getModules() {
+    return Arrays.asList(new AndroidModule(this), new DailyModule());
+  }
+
+  public void inject(Object object) {
+    graph.inject(object);
   }
 
   /**
