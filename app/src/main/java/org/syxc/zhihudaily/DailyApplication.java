@@ -3,7 +3,7 @@ package org.syxc.zhihudaily;
 import android.app.Application;
 import android.util.Log;
 import dagger.ObjectGraph;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.syxc.zhihudaily.api.ApiClient;
 import timber.log.Timber;
@@ -13,14 +13,12 @@ import timber.log.Timber;
  */
 public final class DailyApplication extends Application {
 
-  private ObjectGraph graph;
-
-  public final String injectText = "xixi";
+  private ObjectGraph applicationGraph;
 
   @Override public void onCreate() {
     super.onCreate();
 
-    graph = ObjectGraph.create(getModules().toArray());
+    applicationGraph = ObjectGraph.create(getModules().toArray());
 
     if (DailyConfig.DEBUG) {
       Timber.plant(new Timber.DebugTree());
@@ -34,12 +32,16 @@ public final class DailyApplication extends Application {
     ApiClient.instance().destroy();
   }
 
+  /**
+   * A list of modules to use for the application graph. Subclasses can override this method to
+   * provide additional modules provided they call {@code super.getModules()}.
+   */
   protected List<Object> getModules() {
-    return Arrays.asList(new AndroidModule(this), new DailyModule());
+    return Collections.singletonList(new AndroidModule(this));
   }
 
-  public void inject(Object object) {
-    graph.inject(object);
+  public ObjectGraph getApplicationGraph() {
+    return applicationGraph;
   }
 
   /**

@@ -1,6 +1,5 @@
-package org.syxc.zhihudaily.activity;
+package org.syxc.zhihudaily.ui.activity;
 
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -11,19 +10,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import butterknife.ButterKnife;
-import javax.inject.Inject;
 import org.syxc.zhihudaily.R;
-import org.syxc.zhihudaily.api.ApiClient;
-import org.syxc.zhihudaily.api.Callback;
-import org.syxc.zhihudaily.model.Splash;
 import timber.log.Timber;
 
 public class MainActivity extends BaseActivity
     implements NavigationView.OnNavigationItemSelectedListener {
-
-  @Inject LocationManager locationManager;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -51,8 +43,6 @@ public class MainActivity extends BaseActivity
 
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(this);
-
-    loadData();
   }
 
   @Override public void onBackPressed() {
@@ -106,27 +96,5 @@ public class MainActivity extends BaseActivity
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);
     return true;
-  }
-
-  void loadData() {
-    try {
-      ApiClient.instance().fetchSplashScreen(null, new Callback<Splash>() {
-        @Override public void onSuccess(final Splash splash) {
-          Timber.i("data: %s", splash.toString());
-          Toast.makeText(getBaseContext(), splash.text, Toast.LENGTH_SHORT).show();
-        }
-
-        @Override public void onCompleted() {
-          Toast.makeText(getBaseContext(), "onCompleted", Toast.LENGTH_SHORT).show();
-          Timber.i("locationManager: %s", locationManager.getAllProviders());
-        }
-
-        @Override public void onError(String error) {
-          Toast.makeText(getBaseContext(), error, Toast.LENGTH_SHORT).show();
-        }
-      });
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
   }
 }

@@ -12,7 +12,8 @@ import static android.content.Context.LOCATION_SERVICE;
  * A module for Android-specific dependencies which require a {@link Context} or
  * {@link android.app.Application} to create.
  */
-@Module(library = true) public class AndroidModule {
+@Module(library = true)
+public class AndroidModule {
   private final DailyApplication application;
 
   public AndroidModule(DailyApplication application) {
