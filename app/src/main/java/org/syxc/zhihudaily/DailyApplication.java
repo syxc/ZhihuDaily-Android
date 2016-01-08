@@ -12,7 +12,6 @@ import timber.log.Timber;
  * Created by syxc on 1/6/16.
  */
 public final class DailyApplication extends Application {
-
   private ObjectGraph applicationGraph;
 
   @Override public void onCreate() {
@@ -28,8 +27,9 @@ public final class DailyApplication extends Application {
   }
 
   @Override public void onTerminate() {
-    super.onTerminate();
     ApiClient.instance().destroy();
+    applicationGraph = null;
+    super.onTerminate();
   }
 
   /**

@@ -8,14 +8,16 @@ import org.syxc.zhihudaily.ui.ActivityTitleController;
 import org.syxc.zhihudaily.ui.activity.BaseActivity;
 import org.syxc.zhihudaily.ui.activity.MainActivity;
 import org.syxc.zhihudaily.ui.activity.SplashActivity;
+import org.syxc.zhihudaily.ui.fragment.LatestNewsFragment;
 
 @Module(
-    injects = {
-        SplashActivity.class,
-        MainActivity.class,
-    },
-    addsTo = AndroidModule.class,
-    library = true
+  injects = {
+    SplashActivity.class,
+    MainActivity.class,
+    LatestNewsFragment.class
+  },
+  addsTo = AndroidModule.class,
+  library = true
 )
 public class ActivityModule {
   private final BaseActivity activity;

@@ -7,9 +7,13 @@ import org.syxc.zhihudaily.ui.activity.BaseActivity;
 /**
  * Created by syxc on 16/1/7.
  */
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     ((BaseActivity) getActivity()).inject(this);
   }
+
+  /** -------------------- abstract methods -------------------- */
+  
+  abstract void loadData();
 }

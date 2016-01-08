@@ -1,5 +1,6 @@
 package org.syxc.zhihudaily.api;
 
+import org.syxc.zhihudaily.model.LatestNews;
 import org.syxc.zhihudaily.model.Splash;
 
 /**
@@ -23,5 +24,11 @@ public interface DailyApi {
    */
   void fetchSplashScreen(String resolution, Callback<Splash> callback) throws Exception;
 
-  void fetchLatestNews() throws Exception;
+  /**
+   * 获取最新消息
+   *
+   * @param callback Callback
+   * @throws Exception
+   */
+  void fetchLatestNews(Callback<LatestNews> callback) throws Exception;
 }

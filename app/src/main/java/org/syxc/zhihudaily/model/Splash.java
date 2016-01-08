@@ -12,14 +12,10 @@ public final class Splash {
   public String text;
 
   // 图像的 URL
-  @JSONField(name = "img") public String image;
+  @JSONField(name = "img")
+  public String image;
 
   public Splash() {
-  }
-
-  public Splash(String text, String image) {
-    this.text = text;
-    this.image = image;
   }
 
   @Override public String toString() {

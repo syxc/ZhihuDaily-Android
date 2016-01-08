@@ -6,6 +6,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import java.io.IOException;
 import org.syxc.zhihudaily.DailyConfig;
+import org.syxc.zhihudaily.model.LatestNews;
 import org.syxc.zhihudaily.model.Splash;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -63,7 +64,7 @@ public final class ApiClient implements DailyApi {
    * @throws Exception
    */
   @Override public void fetchSplashScreen(String resolution, Callback<Splash> callback)
-      throws Exception {
+    throws Exception {
     String url;
     if (resolution == null) {
       url = String.format(Api.SplashScreen.url(), "1080*1776");
@@ -72,38 +73,67 @@ public final class ApiClient implements DailyApi {
     }
 
     RxOkHttp.request(getClient(), getRequest(url))
-        .subscribeOn(Schedulers.newThread())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Subscriber<Response>() {
-          @Override public void onCompleted() {
-            callback.onCompleted();
-          }
+      .subscribeOn(Schedulers.newThread())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new Subscriber<Response>() {
+        @Override public void onCompleted() {
+          callback.onCompleted();
+        }
 
-          @Override public void onError(Throwable e) {
-            Timber.e(e.getMessage());
-            callback.onError(e.getLocalizedMessage());
-          }
+        @Override public void onError(Throwable e) {
+          Timber.e(e.getMessage());
+          callback.onError(e.getLocalizedMessage());
+        }
 
-          @Override public void onNext(Response response) {
+        @Override public void onNext(Response response) {
+          try {
+            String data = response.body().string();
+            Timber.i("fetchSplashScreen: %s", data);
+            Splash splash = JSON.parseObject(data, Splash.class);
+            callback.onSuccess(splash);
+          } catch (IOException e) {
+            e.printStackTrace();
+          } finally {
             try {
-              String data = response.body().string();
-              Timber.i(data);
-              Splash splash = JSON.parseObject(data, Splash.class);
-              callback.onSuccess(splash);
+              response.body().close();
             } catch (IOException e) {
-              e.printStackTrace();
-            } finally {
-              try {
-                response.body().close();
-              } catch (IOException e) {
-                // ignore
-              }
+              // ignore
             }
           }
-        });
+        }
+      });
   }
 
-  @Override public void fetchLatestNews() throws Exception {
+  @Override public void fetchLatestNews(Callback<LatestNews> callback) throws Exception {
+    RxOkHttp.request(getClient(), getRequest(Api.LatestNews.url()))
+      .subscribeOn(Schedulers.newThread())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe(new Subscriber<Response>() {
+        @Override public void onCompleted() {
+          callback.onCompleted();
+        }
 
+        @Override public void onError(Throwable e) {
+          Timber.e(e.getMessage());
+          callback.onError(e.getLocalizedMessage());
+        }
+
+        @Override public void onNext(Response response) {
+          try {
+            String data = response.body().string();
+            Timber.i("fetchLatestNews: %s", data);
+            LatestNews latestNews = JSON.parseObject(data, LatestNews.class);
+            callback.onSuccess(latestNews);
+          } catch (IOException e) {
+            e.printStackTrace();
+          } finally {
+            try {
+              response.body().close();
+            } catch (IOException e) {
+              // ignore
+            }
+          }
+        }
+      });
   }
 }

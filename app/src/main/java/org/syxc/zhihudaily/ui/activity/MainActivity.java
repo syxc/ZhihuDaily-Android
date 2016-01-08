@@ -10,12 +10,17 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import org.syxc.zhihudaily.R;
+import org.syxc.zhihudaily.ui.fragment.LatestNewsFragment;
 import timber.log.Timber;
 
 public class MainActivity extends BaseActivity
-    implements NavigationView.OnNavigationItemSelectedListener {
+  implements NavigationView.OnNavigationItemSelectedListener {
+
+  @Bind(R.id.fragment_container) FrameLayout mFrameLayout;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -30,19 +35,29 @@ public class MainActivity extends BaseActivity
 
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
     fab.setOnClickListener(
-        view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            .setAction("Action", null)
-            .show());
+      view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        .setAction("Action", null)
+        .show());
 
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     ActionBarDrawerToggle toggle =
-        new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close);
+      new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open,
+        R.string.navigation_drawer_close);
     drawer.setDrawerListener(toggle);
     toggle.syncState();
 
     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
     navigationView.setNavigationItemSelectedListener(this);
+
+    // fragment_container FrameLayout
+    if (mFrameLayout != null) {
+      if (savedInstanceState == null) {
+        LatestNewsFragment newsFragment = LatestNewsFragment.newInstance();
+        getSupportFragmentManager().beginTransaction()
+          .add(R.id.fragment_container, newsFragment)
+          .commit();
+      }
+    }
   }
 
   @Override public void onBackPressed() {
@@ -96,5 +111,9 @@ public class MainActivity extends BaseActivity
     DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
     drawer.closeDrawer(GravityCompat.START);
     return true;
+  }
+
+  @Override void loadData() {
+
   }
 }
