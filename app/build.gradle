@@ -57,13 +57,15 @@ android {
   }
 }
 
+final supportLibVersion = '23.1.1'
+
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
 
   // Support dependencies
-  compile 'com.android.support:appcompat-v7:23.1.1'
-  compile 'com.android.support:design:23.1.1'
-  compile 'com.android.support:recyclerview-v7:23.1.1'
+  compile "com.android.support:appcompat-v7:${supportLibVersion}"
+  compile "com.android.support:design:${supportLibVersion}"
+  compile "com.android.support:recyclerview-v7:${supportLibVersion}"
 
   // Base dependencies
   compile 'com.jakewharton:butterknife:7.0.1'
