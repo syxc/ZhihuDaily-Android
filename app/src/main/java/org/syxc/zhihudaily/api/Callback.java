@@ -1,6 +1,7 @@
 package org.syxc.zhihudaily.api;
 
 /**
+ * Callback
  * Created by syxc on 15/12/15.
  */
 public interface Callback<T> {

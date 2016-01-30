@@ -31,4 +31,12 @@ public interface DailyApi {
    * @throws Exception
    */
   void fetchLatestNews(Callback<LatestNews> callback) throws Exception;
+
+  /**
+   * Just Post test
+   * @param search
+   * @param callback
+   * @throws Exception
+   */
+  void fetchTestPost(String search, Callback<String> callback) throws Exception;
 }
