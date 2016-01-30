@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import javax.inject.Inject;
 import org.syxc.zhihudaily.R;
@@ -67,15 +66,15 @@ public class LatestNewsFragment extends BaseFragment {
     try {
       ApiClient.instance().fetchTestPost("Jurassic Park", new Callback<String>() {
         @Override public void onSuccess(String s) {
-          Timber.i("Search result: %s", s);
+          showLongTost("Search result: " + s);
         }
 
         @Override public void onCompleted() {
-          Toast.makeText(getContext(), "Search completed", Toast.LENGTH_SHORT).show();
+          showShortTost("Search completed");
         }
 
         @Override public void onError(String error) {
-          Toast.makeText(getContext(), "ERROR: " + error, Toast.LENGTH_SHORT).show();
+          showShortTost("ERROR: " + error);
         }
       });
     } catch (Exception e) {
