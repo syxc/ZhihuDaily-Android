@@ -1,25 +1,25 @@
-package org.syxc.zhihudaily.api;
+package org.syxc.zhihudaily.api
 
-import com.squareup.okhttp.Response;
+import com.squareup.okhttp.Response
 
 /**
  * RxCallback
  * Created by syxc on 16/1/30.
  */
-public interface RxCallback {
+interface RxCallback {
   /**
    * Success http response
-   *
+
    * @param response com.squareup.okhttp.Response
    */
-  void onSuccess(Response response);
+  fun onSuccess(response: Response)
 
-  void onCompleted();
+  fun onCompleted()
 
   /**
    * Fail http response
-   *
+
    * @param e java.lang.Throwable
    */
-  void onError(Throwable e);
+  fun onError(e: Throwable)
 }

@@ -28,7 +28,7 @@ public class SplashActivity extends BaseActivity {
 
   @Override void loadData() {
     try {
-      ApiClient.instance().fetchSplashScreen(null, new Callback<Splash>() {
+      ApiClient.Companion.instance().fetchSplashScreen(null, new Callback<Splash>() {
         @Override public void onSuccess(final Splash splash) {
           Timber.i("data: %s", splash.toString());
           Glide.with(SplashActivity.this).load(splash.image).crossFade().into(mSplashImage);

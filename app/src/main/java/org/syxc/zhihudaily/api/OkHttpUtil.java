@@ -16,7 +16,7 @@ public final class OkHttpUtil {
 
   static {
     client = new OkHttpClient();
-    if (DailyConfig.DEBUG) {
+    if (DailyConfig.INSTANCE.getDEBUG()) {
       // HttpLoggingInterceptor
       HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
       logging.setLevel(HttpLoggingInterceptor.Level.BODY);

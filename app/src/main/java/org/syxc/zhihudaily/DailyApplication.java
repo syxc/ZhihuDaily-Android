@@ -19,7 +19,7 @@ public final class DailyApplication extends Application {
 
     applicationGraph = ObjectGraph.create(getModules().toArray());
 
-    if (DailyConfig.DEBUG) {
+    if (DailyConfig.INSTANCE.getDEBUG()) {
       Timber.plant(new Timber.DebugTree());
     } else {
       Timber.plant(new CrashReportingTree());
@@ -27,7 +27,7 @@ public final class DailyApplication extends Application {
   }
 
   @Override public void onTerminate() {
-    ApiClient.instance().destroy();
+    ApiClient.Companion.instance().destroy();
     applicationGraph = null;
     super.onTerminate();
   }

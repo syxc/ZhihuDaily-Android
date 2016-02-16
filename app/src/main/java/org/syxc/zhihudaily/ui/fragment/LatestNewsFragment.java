@@ -46,7 +46,7 @@ public class LatestNewsFragment extends BaseFragment {
 
   @Override void loadData() {
     try {
-      ApiClient.instance().fetchLatestNews(new Callback<LatestNews>() {
+      ApiClient.Companion.instance().fetchLatestNews(new Callback<LatestNews>() {
         @Override public void onSuccess(LatestNews latestNews) {
           Timber.i("latestNews: %s", JSON.toJSONString(latestNews));
         }
@@ -64,7 +64,7 @@ public class LatestNewsFragment extends BaseFragment {
     }
 
     try {
-      ApiClient.instance().fetchTestPost("Jurassic Park", new Callback<String>() {
+      ApiClient.Companion.instance().fetchTestPost("Jurassic Park", new Callback<String>() {
         @Override public void onSuccess(String s) {
           showLongTost("Search result: " + s);
         }
